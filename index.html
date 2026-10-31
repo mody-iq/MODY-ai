@@ -39,7 +39,7 @@
     flex-direction: column;
     gap: 12px;
   }
-  .msg {
+.msg {
     min-width: 0;
     max-width: 92%;
     padding: 10px 14px;
@@ -48,7 +48,12 @@
     line-height: 1.6;
     white-space: pre-wrap;
     word-wrap: break-word;
-    overflow: hidden;
+    
+    /* التعديلات الجديدة */
+    overflow-wrap: break-word; /* يضمن كسر الكلمات الطويلة جداً */
+    overflow: visible; /* إزالة القص وإظهار النص كاملاً */
+    height: auto; /* السماح للفقاعة بالتمدد عمودياً */
+    flex-shrink: 0; /* يمنع الـ Flexbox من ضغط الفقاعة وقص محتواها */
   }
   .user { background: #2563eb; color: #fff; align-self: flex-start; }
   .bot { background: #1e293b; border: 1px solid #334155; align-self: flex-end; }
@@ -63,15 +68,19 @@
     font-size: 13px;
     font-weight: bold;
   }
-  .codewrap {
+.codewrap {
     margin: 8px 0;
     border: 1px solid #334155;
     border-radius: 10px;
-    overflow: hidden;
     background: #020617;
     direction: ltr;
     text-align: left;
     white-space: normal;
+    
+    /* التعديلات الجديدة */
+    overflow: hidden; /* نبقيها hidden للحفاظ على الحواف الدائرية */
+    height: auto; /* السماح بالتمدد */
+    flex-shrink: 0; /* منع الانضغاط */
   }
   .codehead {
     display: flex;
