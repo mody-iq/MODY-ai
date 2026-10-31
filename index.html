@@ -99,7 +99,7 @@
 
 <script>
   var WORKER_URL = "https://mody-ai-proxy.iraqloin7.workers.dev";
-  var history = [];
+  var chatHistory = [];
 
   var chatBox = document.getElementById("chatBox");
   var chatForm = document.getElementById("chatForm");
@@ -122,7 +122,7 @@
     if (!text) return;
 
     addMessage(text, "user");
-    history.push({ role: "user", content: text });
+    chatHistory.push({ role: "user", content: text });
     userInput.value = "";
     sendBtn.disabled = true;
 
@@ -132,7 +132,7 @@
       var response = await fetch(WORKER_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history })
+        body: JSON.stringify({ messages: chatHistory })
       });
 
       var data = await response.json();
@@ -140,7 +140,7 @@
       if (data.error) {
         var msg = data.error.message || JSON.stringify(data.error);
         loading.textContent = "خطأ: " + msg;
-        history.pop();
+        chatHistory.pop();
       } else {
         var reply = "";
         if (data.choices && data.choices[0] && data.choices[0].message) {
@@ -148,11 +148,11 @@
         }
         if (!reply) reply = "لم يصل رد من النموذج، جرّب مرة ثانية.";
         loading.textContent = reply;
-        history.push({ role: "assistant", content: reply });
+        chatHistory.push({ role: "assistant", content: reply });
       }
     } catch (err) {
       loading.textContent = "خطأ في الاتصال: " + err.message;
-      history.pop();
+      chatHistory.pop();
     }
 
     sendBtn.disabled = false;
@@ -160,7 +160,7 @@
   });
 
   clearBtn.addEventListener("click", function () {
-    history = [];
+    chatHistory = [];
     chatBox.innerHTML = "";
     addMessage("بدأنا محادثة جديدة. تفضل.", "bot");
   });
