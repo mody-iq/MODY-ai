@@ -47,11 +47,11 @@
   <script>
     const API_URL = "https://openrouter.ai/api/v1/chat/completions";
     // استخدام نموذج ديب سيك المجاني المستقر أو كودر
-    const MODEL_NAME = "deepseek/deepseek-chat:free";
+    const MODEL_NAME = "google/gemini-2.0-flash-lite-preview-02-05:free";
 
     // حفظ المفتاح تلقائياً عند أول تشغيل إذا لم يكن مخزناً
     if(!localStorage.getItem('user_api_key')) {
-      localStorage.setItem('user_api_key', "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");
+      localStorage.setItem('user_api_key', "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");
     }
 
     function toggleSettings() {
