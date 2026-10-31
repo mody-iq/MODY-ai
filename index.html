@@ -18,7 +18,7 @@
     <button onclick="toggleSettings()" class="text-xs bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded border border-gray-600">⚙️ إعداد الـ API</button>
   </header>
 
-  <!-- Settings Modal (Hidden by default) -->
+  <!-- Settings Modal -->
   <div id="settingsModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
     <div class="bg-gray-800 p-6 rounded-xl w-full max-w-md border border-gray-700">
       <h2 class="text-md font-bold mb-3 text-gray-200">إعدادات مفتاح API</h2>
@@ -32,7 +32,7 @@
   <!-- Chat Container -->
   <main id="chatBox" class="chat-container overflow-y-auto p-4 space-y-4 flex-1">
     <div class="bg-gray-800 p-3 rounded-lg max-w-[85%] self-start border border-gray-700 text-sm">
-      مرحباً بك! أنا مساعدك الخاص بدون قيود أو حدود. أدخل مفتاح API الخاص بك من زر الإعدادات وأرسل رسالتك الأولى.
+      مرحباً بك! تم تحديث التطبيق لدعم النماذج بشكل متوافق. أرسل رسالتك وسأرد عليك فوراً.
     </div>
   </main>
 
@@ -46,13 +46,18 @@
 
   <script>
     const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-    const MODEL_NAME = "deepseek/deepseek-chat:free"; // نموذج قوي ومجاني للبرمجة والمحادثة
+    // استخدام نموذج ديب سيك المجاني المستقر أو كودر
+    const MODEL_NAME = "deepseek/deepseek-chat:free";
+
+    // حفظ المفتاح تلقائياً عند أول تشغيل إذا لم يكن مخزناً
+    if(!localStorage.getItem('user_api_key')) {
+      localStorage.setItem('user_api_key', "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");
+    }
 
     function toggleSettings() {
       const modal = document.getElementById('settingsModal');
       modal.classList.toggle('hidden');
-      const savedKey = localStorage.getItem('user_api_key') || '';
-      document.getElementById('apiKeyInput').value = savedKey;
+      document.getElementById('apiKeyInput').value = localStorage.getItem('user_api_key') || '';
     }
 
     function saveApiKey() {
@@ -68,7 +73,7 @@
       e.preventDefault();
       const apiKey = localStorage.getItem('user_api_key');
       if(!apiKey) {
-        alert('يرجى إضافة مفتاح API الخاص بك أولاً من زر الإعدادات أعلى الشاشة.');
+        alert('يرجى ضبط مفتاح API.');
         toggleSettings();
         return;
       }
@@ -84,29 +89,34 @@
 
       try {
         const response = await fetch(API_URL, {
-  method: 'POST',
-  headers: {
-    'Authorization': `Bearer ${apiKey}`,
-    'HTTP-Referer': window.location.origin, // لتحديد مصدر الموقع
-    'X-Title': 'Mody AI Assistant',         // اسم التطبيق
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    model: MODEL_NAME,
-    messages: [{ role: 'user', content: text }]
-  })
-});
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'HTTP-Referer': window.location.origin,
+            'X-Title': 'Mody AI App',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: MODEL_NAME,
+            messages: [{ role: 'user', content: text }]
+          })
+        });
 
         const data = await response.json();
-        const botReply = data.choices?.[0]?.message?.content || 'حدث خطأ أثناء المعالجة.';
         
+        if (data.error) {
+          document.getElementById(loadingId).innerText = 'خطأ من السيرفر: ' + (data.error.message || JSON.stringify(data.error));
+          return;
+        }
+
+        const botReply = data.choices?.[0]?.message?.content || 'لم يتم استلام رد من النموذج.';
         document.getElementById(loadingId).innerText = botReply;
       } catch (err) {
-        document.getElementById(loadingId).innerText = 'خطأ في الاتصال بالنموذج. تأكد من المفتاح أو الاتصال.';
+        document.getElementById(loadingId).innerText = 'خطأ في الاتصال بالشبكة: ' + err.message;
       }
     }
 
-    function appendMessage(text, sender, isLoading = false) {
+    function appendMessage(text, sender) {
       const chatBox = document.getElementById('chatBox');
       const msgDiv = document.createElement('div');
       const msgId = 'msg-' + Date.now();
