@@ -403,9 +403,10 @@
         bubble.textContent = attempt === 0 ? "جاري التفكير..." : "أعيد إرسال الرسالة...";
         var data = await fetchReply();
 
-        if (data.error) {
-          throw serverError(data.error.message || JSON.stringify(data.error));
-        }
+if (data.error) {
+  // إخفاء تفاصيل الأخطاء الطويلة وعرض رسالة عامة
+  throw serverError("حدث خطأ في الاتصال بالنموذج أو أن الطلب مرفوض.");
+}
 
         var reply = "";
         if (data.choices && data.choices[0] && data.choices[0].message) {
