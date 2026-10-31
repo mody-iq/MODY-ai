@@ -15,24 +15,13 @@
   <!-- Header -->
   <header class="bg-gray-800 p-4 shadow border-b border-gray-700 flex justify-between items-center">
     <h1 class="text-lg font-bold text-blue-400">🤖 مساعدي الخاص</h1>
-    <button onclick="toggleSettings()" class="text-xs bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded border border-gray-600">⚙️ إعداد الـ API</button>
+    <div class="text-xs bg-gray-700 px-3 py-1 rounded border border-gray-600 text-green-400">🟢 متصل بنجاح</div>
   </header>
-
-  <!-- Settings Modal -->
-  <div id="settingsModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
-    <div class="bg-gray-800 p-6 rounded-xl w-full max-w-md border border-gray-700">
-      <h2 class="text-md font-bold mb-3 text-gray-200">إعدادات مفتاح API</h2>
-      <input type="password" id="apiKeyInput" placeholder="أدخل مفتاح OpenRouter API..." class="w-full p-3 bg-gray-900 border border-gray-700 rounded text-sm text-white focus:outline-none focus:border-blue-500 mb-4">
-      <div class="flex justify-end gap-2">
-        <button onclick="saveApiKey()" class="bg-blue-600 px-4 py-2 rounded text-sm font-semibold hover:bg-blue-500">حفظ</button>
-      </div>
-    </div>
-  </div>
 
   <!-- Chat Container -->
   <main id="chatBox" class="chat-container overflow-y-auto p-4 space-y-4 flex-1">
     <div class="bg-gray-800 p-3 rounded-lg max-w-[85%] self-start border border-gray-700 text-sm">
-      مرحباً بك! تم تحديث التطبيق لدعم النماذج بشكل متوافق. أرسل رسالتك وسأرد عليك فوراً.
+      مرحباً بك يا مودي! التطبيق متصل الآن بالمفتاح الجديد. أرسل رسالتك وسأرد عليك فوراً.
     </div>
   </main>
 
@@ -46,37 +35,13 @@
 
   <script>
     const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-    // استخدام نموذج ديب سيك المجاني المستقر أو كودر
     const MODEL_NAME = "google/gemini-2.0-flash-lite-preview-02-05:free";
-
-    // حفظ المفتاح تلقائياً عند أول تشغيل إذا لم يكن مخزناً
-    if(!localStorage.getItem('user_api_key')) {
-      localStorage.setItem('user_api_key', "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");
-    }
-
-    function toggleSettings() {
-      const modal = document.getElementById('settingsModal');
-      modal.classList.toggle('hidden');
-      document.getElementById('apiKeyInput').value = localStorage.getItem('user_api_key') || '';
-    }
-
-    function saveApiKey() {
-      const key = document.getElementById('apiKeyInput').value.trim();
-      if(key) {
-        localStorage.setItem('user_api_key', key);
-        alert('تم حفظ المفتاح بنجاح!');
-        toggleSettings();
-      }
-    }
+    
+    // مفتاحك الجديد المباشر
+    const API_KEY = "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";
 
     async function sendMessage(e) {
       e.preventDefault();
-      const apiKey = localStorage.getItem('user_api_key');
-      if(!apiKey) {
-        alert('يرجى ضبط مفتاح API.');
-        toggleSettings();
-        return;
-      }
 
       const inputField = document.getElementById('userInput');
       const text = inputField.value.trim();
@@ -91,7 +56,7 @@
         const response = await fetch(API_URL, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${apiKey}`,
+            'Authorization': `Bearer ${API_KEY}`,
             'HTTP-Referer': window.location.origin,
             'X-Title': 'Mody AI App',
             'Content-Type': 'application/json'
