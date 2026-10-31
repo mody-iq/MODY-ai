@@ -1,488 +1,486 @@
-‏<!DOCTYPE html>
-‏<html lang="ar" dir="rtl">
-‏<head>
-‏<meta charset="UTF-8">
-‏<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-‏<title>مساعدي الخاص</title>
-‏<style>
-‏  * { box-sizing: border-box; }
-‏  html, body { height: 100%; margin: 0; }
-‏  body {
-‏    background: #0f172a;
-‏    color: #e5e7eb;
-‏    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-‏    display: flex;
-‏    flex-direction: column;
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مساعدي الخاص</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: #0f172a;
+    color: #e5e7eb;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+    flex-direction: column;
   }
-‏  header {
-‏    padding: 14px 16px;
-‏    background: #1e293b;
-‏    border-bottom: 1px solid #334155;
-‏    display: flex;
-‏    justify-content: space-between;
-‏    align-items: center;
+  header {
+    padding: 14px 16px;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-‏  header h1 { margin: 0; font-size: 18px; color: #60a5fa; }
-‏  #clearBtn {
-‏    background: #334155;
-‏    color: #e5e7eb;
-‏    border: 0;
-‏    border-radius: 8px;
-‏    padding: 6px 12px;
-‏    font-size: 13px;
+  header h1 { margin: 0; font-size: 18px; color: #60a5fa; }
+  #clearBtn {
+    background: #334155;
+    color: #e5e7eb;
+    border: 0;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
   }
-‏  #chatBox {
-‏    flex: 1;
-‏    overflow-y: auto;
-‏    padding: 16px;
-‏    display: flex;
-‏    flex-direction: column;
-‏    gap: 12px;
+  #chatBox {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
-‏  .msg {
-‏    min-width: 0;
-‏    width: fit-content;
-‏    max-width: 92%;
-‏    padding: 10px 14px;
-‏    border-radius: 14px;
-‏    font-size: 15px;
-‏    line-height: 1.6;
-‏    white-space: pre-wrap;
-‏    word-wrap: break-word;
-‏    overflow-wrap: break-word;
+  .msg {
+    min-width: 0;
+    max-width: 92%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 15px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
   }
-‏  .user { background: #2563eb; color: #fff; align-self: flex-start; }
-‏  .bot { background: #1e293b; border: 1px solid #334155; align-self: flex-end; width: 92%; }
-‏  .retrybtn {
-‏    display: inline-block;
-‏    margin-top: 8px;
-‏    background: #2563eb;
-‏    color: #fff;
-‏    border: 0;
-‏    border-radius: 8px;
-‏    padding: 6px 14px;
-‏    font-size: 13px;
-‏    font-weight: bold;
+  .user { background: #2563eb; color: #fff; align-self: flex-start; }
+  .bot { background: #1e293b; border: 1px solid #334155; align-self: flex-end; }
+  .retrybtn {
+    display: inline-block;
+    margin-top: 8px;
+    background: #2563eb;
+    color: #fff;
+    border: 0;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: bold;
   }
-‏  .codewrap {
-‏    margin: 8px 0;
-‏    border: 1px solid #334155;
-‏    border-radius: 10px;
-‏    overflow: hidden;
-‏    background: #020617;
-‏    direction: ltr;
-‏    text-align: left;
-‏    white-space: normal;
-‏    width: 100%;
+  .codewrap {
+    margin: 8px 0;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #020617;
+    direction: ltr;
+    text-align: left;
+    white-space: normal;
   }
-‏  .codehead {
-‏    display: flex;
-‏    justify-content: space-between;
-‏    align-items: center;
-‏    padding: 6px 10px;
-‏    background: #1e293b;
-‏    font-size: 12px;
-‏    color: #94a3b8;
+  .codehead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    background: #1e293b;
+    font-size: 12px;
+    color: #94a3b8;
   }
-‏  .copybtn {
-‏    background: #334155;
-‏    color: #e5e7eb;
-‏    border: 0;
-‏    border-radius: 6px;
-‏    padding: 4px 10px;
-‏    font-size: 12px;
+  .copybtn {
+    background: #334155;
+    color: #e5e7eb;
+    border: 0;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
   }
-‏  .codewrap pre {
-‏    margin: 0;
-‏    padding: 10px;
-‏    overflow-x: auto;
-‏    font-size: 13px;
-‏    line-height: 1.5;
-‏    white-space: pre;
+  .codewrap pre {
+    margin: 0;
+    padding: 10px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre;
   }
-‏  .codewrap code, code.inline {
-‏    font-family: ui-monospace, Menlo, Consolas, monospace;
+  .codewrap code, code.inline {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
   }
-‏  code.inline {
-‏    background: #0f172a;
-‏    padding: 1px 5px;
-‏    border-radius: 5px;
-‏    direction: ltr;
-‏    unicode-bidi: embed;
-‏    font-size: 13px;
+  code.inline {
+    background: #0f172a;
+    padding: 1px 5px;
+    border-radius: 5px;
+    direction: ltr;
+    unicode-bidi: embed;
+    font-size: 13px;
   }
-‏  footer {
-‏    padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px));
-‏    background: #1e293b;
-‏    border-top: 1px solid #334155;
+  footer {
+    padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: #1e293b;
+    border-top: 1px solid #334155;
   }
-‏  form { display: flex; gap: 8px; }
-‏  #userInput {
-‏    flex: 1;
-‏    background: #0f172a;
-‏    border: 1px solid #334155;
-‏    border-radius: 10px;
-‏    padding: 12px;
-‏    color: #fff;
-‏    font-size: 16px;
-‏    outline: none;
+  form { display: flex; gap: 8px; }
+  #userInput {
+    flex: 1;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 12px;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
   }
-‏  #userInput:focus { border-color: #3b82f6; }
-‏  #sendBtn {
-‏    background: #2563eb;
-‏    color: #fff;
-‏    border: 0;
-‏    border-radius: 10px;
-‏    padding: 0 20px;
-‏    font-size: 15px;
-‏    font-weight: bold;
+  #userInput:focus { border-color: #3b82f6; }
+  #sendBtn {
+    background: #2563eb;
+    color: #fff;
+    border: 0;
+    border-radius: 10px;
+    padding: 0 20px;
+    font-size: 15px;
+    font-weight: bold;
   }
-‏  #sendBtn:disabled { opacity: 0.5; }
-‏</style>
-‏</head>
-‏<body>
+  #sendBtn:disabled { opacity: 0.5; }
+</style>
+</head>
+<body>
 
-‏<header>
-‏  <h1>🤖 مساعدي الخاص</h1>
-‏  <button id="clearBtn" type="button">محادثة جديدة</button>
-‏</header>
+<header>
+  <h1>🤖 مساعدي الخاص</h1>
+  <button id="clearBtn" type="button">محادثة جديدة</button>
+</header>
 
-‏<main id="chatBox"></main>
+<main id="chatBox"></main>
 
-‏<footer>
-‏  <form id="chatForm">
-‏    <input type="text" id="userInput" placeholder="اكتب رسالتك هنا..." autocomplete="off" required>
-‏    <button type="submit" id="sendBtn">إرسال</button>
-‏  </form>
-‏</footer>
+<footer>
+  <form id="chatForm">
+    <input type="text" id="userInput" placeholder="اكتب رسالتك هنا..." autocomplete="off" required>
+    <button type="submit" id="sendBtn">إرسال</button>
+  </form>
+</footer>
 
-‏<script>
-‏  var WORKER_URL = "https://mody-ai-proxy.iraqloin7.workers.dev";
-‏  var STORAGE_KEY = "mody_chat_v1";
-‏  var WELCOME = "مرحباً بك يا مودي! اكتب سؤالك وسأرد عليك.";
-‏  var REQUEST_TIMEOUT_MS = 120000;
-‏  var MAX_AUTO_RETRIES = 3;
-‏  var HIDDEN_ABORT_MS = 3000;
+<script>
+  var WORKER_URL = "https://mody-ai-proxy.iraqloin7.workers.dev";
+  var STORAGE_KEY = "mody_chat_v1";
+  var WELCOME = "مرحباً بك يا مودي! اكتب سؤالك وسأرد عليك.";
+  var REQUEST_TIMEOUT_MS = 120000;
+  var MAX_AUTO_RETRIES = 3;
+  var HIDDEN_ABORT_MS = 3000;
 
-‏  var chatBox = document.getElementById("chatBox");
-‏  var chatForm = document.getElementById("chatForm");
-‏  var userInput = document.getElementById("userInput");
-‏  var sendBtn = document.getElementById("sendBtn");
-‏  var clearBtn = document.getElementById("clearBtn");
+  var chatBox = document.getElementById("chatBox");
+  var chatForm = document.getElementById("chatForm");
+  var userInput = document.getElementById("userInput");
+  var sendBtn = document.getElementById("sendBtn");
+  var clearBtn = document.getElementById("clearBtn");
 
-‏  var busy = false;
-‏  var currentController = null;
-‏  var hiddenAt = 0;
+  var busy = false;
+  var currentController = null;
+  var hiddenAt = 0;
 
-‏  function loadHistory() {
-‏    try {
-‏      var raw = localStorage.getItem(STORAGE_KEY);
-‏      if (!raw) return [];
-‏      var arr = JSON.parse(raw);
-‏      if (!Array.isArray(arr)) return [];
-‏      return arr.filter(function (m) {
-‏        return m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string";
+  function loadHistory() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      var arr = JSON.parse(raw);
+      if (!Array.isArray(arr)) return [];
+      return arr.filter(function (m) {
+        return m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string";
       });
-‏    } catch (e) {
-‏      return [];
+    } catch (e) {
+      return [];
     }
   }
 
-‏  function saveHistory() {
-‏    try {
-‏      localStorage.setItem(STORAGE_KEY, JSON.stringify(chatHistory.slice(-60)));
-‏    } catch (e) {}
+  function saveHistory() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(chatHistory.slice(-60)));
+    } catch (e) {}
   }
 
-‏  function clearSaved() {
-‏    try {
-‏      localStorage.removeItem(STORAGE_KEY);
-‏    } catch (e) {}
+  function clearSaved() {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (e) {}
   }
 
-‏  var chatHistory = loadHistory();
+  var chatHistory = loadHistory();
 
-‏  function copyText(text) {
-‏    if (navigator.clipboard && navigator.clipboard.writeText) {
-‏      return navigator.clipboard.writeText(text).catch(function () {
-‏        return fallbackCopy(text);
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).catch(function () {
+        return fallbackCopy(text);
       });
     }
-‏    return fallbackCopy(text);
+    return fallbackCopy(text);
   }
 
-‏  function fallbackCopy(text) {
-‏    return new Promise(function (resolve, reject) {
-‏      try {
-‏        var ta = document.createElement("textarea");
-‏        ta.value = text;
-‏        ta.style.position = "fixed";
-‏        ta.style.opacity = "0";
-‏        document.body.appendChild(ta);
-‏        ta.focus();
-‏        ta.select();
-‏        var ok = document.execCommand("copy");
-‏        document.body.removeChild(ta);
-‏        if (ok) resolve(); else reject(new Error("copy failed"));
-‏      } catch (e) {
-‏        reject(e);
+  function fallbackCopy(text) {
+    return new Promise(function (resolve, reject) {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        var ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        if (ok) resolve(); else reject(new Error("copy failed"));
+      } catch (e) {
+        reject(e);
       }
     });
   }
 
-‏  function buildCodeBlock(container, lang, code) {
-‏    var wrap = document.createElement("div");
-‏    wrap.className = "codewrap";
+  function buildCodeBlock(container, lang, code) {
+    var wrap = document.createElement("div");
+    wrap.className = "codewrap";
 
-‏    var head = document.createElement("div");
-‏    head.className = "codehead";
+    var head = document.createElement("div");
+    head.className = "codehead";
 
-‏    var label = document.createElement("span");
-‏    label.textContent = lang || "code";
+    var label = document.createElement("span");
+    label.textContent = lang || "code";
 
-‏    var btn = document.createElement("button");
-‏    btn.type = "button";
-‏    btn.className = "copybtn";
-‏    btn.textContent = "نسخ";
-‏    btn.addEventListener("click", function () {
-‏      copyText(code).then(function () {
-‏        btn.textContent = "تم النسخ ✓";
-‏        setTimeout(function () { btn.textContent = "نسخ"; }, 1500);
-‏      }).catch(function () {
-‏        btn.textContent = "فشل النسخ";
-‏        setTimeout(function () { btn.textContent = "نسخ"; }, 1500);
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copybtn";
+    btn.textContent = "نسخ";
+    btn.addEventListener("click", function () {
+      copyText(code).then(function () {
+        btn.textContent = "تم النسخ ✓";
+        setTimeout(function () { btn.textContent = "نسخ"; }, 1500);
+      }).catch(function () {
+        btn.textContent = "فشل النسخ";
+        setTimeout(function () { btn.textContent = "نسخ"; }, 1500);
       });
     });
 
-‏    head.appendChild(label);
-‏    head.appendChild(btn);
+    head.appendChild(label);
+    head.appendChild(btn);
 
-‏    var pre = document.createElement("pre");
-‏    var codeEl = document.createElement("code");
-‏    codeEl.textContent = code;
-‏    pre.appendChild(codeEl);
+    var pre = document.createElement("pre");
+    var codeEl = document.createElement("code");
+    codeEl.textContent = code;
+    pre.appendChild(codeEl);
 
-‏    wrap.appendChild(head);
-‏    wrap.appendChild(pre);
-‏    container.appendChild(wrap);
+    wrap.appendChild(head);
+    wrap.appendChild(pre);
+    container.appendChild(wrap);
   }
 
-‏  function renderInline(container, text) {
-‏    var pieces = text.split("`");
-‏    for (var i = 0; i < pieces.length; i++) {
-‏      if (!pieces[i]) continue;
-‏      if (i % 2 === 1) {
-‏        var c = document.createElement("code");
-‏        c.className = "inline";
-‏        c.textContent = pieces[i];
-‏        container.appendChild(c);
-‏      } else {
-‏        container.appendChild(document.createTextNode(pieces[i]));
+  function renderInline(container, text) {
+    var pieces = text.split("`");
+    for (var i = 0; i < pieces.length; i++) {
+      if (!pieces[i]) continue;
+      if (i % 2 === 1) {
+        var c = document.createElement("code");
+        c.className = "inline";
+        c.textContent = pieces[i];
+        container.appendChild(c);
+      } else {
+        container.appendChild(document.createTextNode(pieces[i]));
       }
     }
   }
 
-‏  function renderBot(container, text) {
-‏    container.textContent = "";
-‏    var parts = text.split("```");
-‏    for (var i = 0; i < parts.length; i++) {
-‏      var part = parts[i];
-‏      if (i % 2 === 1) {
-‏        var lang = "";
-‏        var code = part;
-‏        var nl = code.indexOf("\n");
-‏        if (nl !== -1) {
-‏          var first = code.slice(0, nl).trim();
-‏          if (/^[A-Za-z0-9+#._-]{0,20}$/.test(first)) {
-‏            lang = first;
-‏            code = code.slice(nl + 1);
+  function renderBot(container, text) {
+    container.textContent = "";
+    var parts = text.split("```");
+    for (var i = 0; i < parts.length; i++) {
+      var part = parts[i];
+      if (i % 2 === 1) {
+        var lang = "";
+        var code = part;
+        var nl = code.indexOf("\n");
+        if (nl !== -1) {
+          var first = code.slice(0, nl).trim();
+          if (/^[A-Za-z0-9+#._-]{0,20}$/.test(first)) {
+            lang = first;
+            code = code.slice(nl + 1);
           }
         }
-‏        code = code.replace(/\n+$/, "");
-‏        buildCodeBlock(container, lang, code);
-‏      } else {
-‏        var cleaned = part.replace(/^\n+/, "").replace(/\n+$/, "");
-‏        if (cleaned) renderInline(container, cleaned);
+        code = code.replace(/\n+$/, "");
+        buildCodeBlock(container, lang, code);
+      } else {
+        var cleaned = part.replace(/^\n+/, "").replace(/\n+$/, "");
+        if (cleaned) renderInline(container, cleaned);
       }
     }
   }
 
-‏  function addMessage(text, sender) {
-‏    var div = document.createElement("div");
-‏    div.className = "msg " + sender;
-‏    if (sender === "bot") {
-‏      renderBot(div, text);
-‏    } else {
-‏      div.textContent = text;
+  function addMessage(text, sender) {
+    var div = document.createElement("div");
+    div.className = "msg " + sender;
+    if (sender === "bot") {
+      renderBot(div, text);
+    } else {
+      div.textContent = text;
     }
-‏    chatBox.appendChild(div);
-‏    chatBox.scrollTop = chatBox.scrollHeight;
-‏    return div;
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    return div;
   }
 
-‏  function sleep(ms) {
-‏    return new Promise(function (resolve) { setTimeout(resolve, ms); });
+  function sleep(ms) {
+    return new Promise(function (resolve) { setTimeout(resolve, ms); });
   }
 
-‏  function waitUntilVisible() {
-‏    return new Promise(function (resolve) {
-‏      if (document.visibilityState === "visible") {
-‏        resolve();
-‏        return;
+  function waitUntilVisible() {
+    return new Promise(function (resolve) {
+      if (document.visibilityState === "visible") {
+        resolve();
+        return;
       }
-‏      function onVis() {
-‏        if (document.visibilityState === "visible") {
-‏          document.removeEventListener("visibilitychange", onVis);
-‏          resolve();
+      function onVis() {
+        if (document.visibilityState === "visible") {
+          document.removeEventListener("visibilitychange", onVis);
+          resolve();
         }
       }
-‏      document.addEventListener("visibilitychange", onVis);
+      document.addEventListener("visibilitychange", onVis);
     });
   }
 
-‏  function serverError(message) {
-‏    var e = new Error(message);
-‏    e.isServer = true;
-‏    return e;
+  function serverError(message) {
+    var e = new Error(message);
+    e.isServer = true;
+    return e;
   }
 
-‏  async function fetchReply() {
-‏    var controller = new AbortController();
-‏    currentController = controller;
-‏    var timer = setTimeout(function () { controller.abort(); }, REQUEST_TIMEOUT_MS);
-‏    try {
-‏      var response = await fetch(WORKER_URL, {
-‏        method: "POST",
-‏        headers: { "Content-Type": "application/json" },
-‏        body: JSON.stringify({ messages: chatHistory }),
-‏        signal: controller.signal
+  async function fetchReply() {
+    var controller = new AbortController();
+    currentController = controller;
+    var timer = setTimeout(function () { controller.abort(); }, REQUEST_TIMEOUT_MS);
+    try {
+      var response = await fetch(WORKER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: chatHistory }),
+        signal: controller.signal
       });
-‏      var text = await response.text();
-‏      var data;
-‏      try {
-‏        data = JSON.parse(text);
-‏      } catch (e) {
-‏        throw serverError("رد غير مفهوم من الخادم (" + response.status + ")");
+      var text = await response.text();
+      var data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        throw serverError("رد غير مفهوم من الخادم (" + response.status + ")");
       }
-‏      return data;
-‏    } finally {
-‏      clearTimeout(timer);
-‏      if (currentController === controller) currentController = null;
+      return data;
+    } finally {
+      clearTimeout(timer);
+      if (currentController === controller) currentController = null;
     }
   }
 
-‏  function showFailure(bubble, message) {
-‏    bubble.textContent = message;
-‏    bubble.appendChild(document.createElement("br"));
-‏    var btn = document.createElement("button");
-‏    btn.type = "button";
-‏    btn.className = "retrybtn";
-‏    btn.textContent = "إعادة المحاولة";
-‏    btn.addEventListener("click", function () {
-‏      if (busy) return;
-‏      requestReply(bubble);
+  function showFailure(bubble, message) {
+    bubble.textContent = message;
+    bubble.appendChild(document.createElement("br"));
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "retrybtn";
+    btn.textContent = "إعادة المحاولة";
+    btn.addEventListener("click", function () {
+      if (busy) return;
+      requestReply(bubble);
     });
-‏    bubble.appendChild(btn);
-‏    chatBox.scrollTop = chatBox.scrollHeight;
+    bubble.appendChild(btn);
+    chatBox.scrollTop = chatBox.scrollHeight;
   }
 
-‏  async function requestReply(bubble) {
-‏    busy = true;
-‏    sendBtn.disabled = true;
-‏    var attempt = 0;
+  async function requestReply(bubble) {
+    busy = true;
+    sendBtn.disabled = true;
+    var attempt = 0;
 
-‏    while (true) {
-‏      try {
-‏        bubble.textContent = attempt === 0 ? "جاري التفكير..." : "أعيد إرسال الرسالة...";
-‏        var data = await fetchReply();
+    while (true) {
+      try {
+        bubble.textContent = attempt === 0 ? "جاري التفكير..." : "أعيد إرسال الرسالة...";
+        var data = await fetchReply();
 
-‏        if (data.error) {
-‏          throw serverError(data.error.message || JSON.stringify(data.error));
+        if (data.error) {
+          throw serverError(data.error.message || JSON.stringify(data.error));
         }
 
-‏        var reply = "";
-‏        if (data.choices && data.choices[0] && data.choices[0].message) {
-‏          reply = data.choices[0].message.content;
+        var reply = "";
+        if (data.choices && data.choices[0] && data.choices[0].message) {
+          reply = data.choices[0].message.content;
         }
-‏        if (!reply) reply = "لم يصل رد من النموذج، جرّب مرة ثانية.";
+        if (!reply) reply = "لم يصل رد من النموذج، جرّب مرة ثانية.";
 
-‏        renderBot(bubble, reply);
-‏        chatHistory.push({ role: "assistant", content: reply });
-‏        saveHistory();
-‏        break;
-‏      } catch (err) {
-‏        if (err && err.isServer) {
-‏          showFailure(bubble, "خطأ: " + err.message);
-‏          break;
+        renderBot(bubble, reply);
+        chatHistory.push({ role: "assistant", content: reply });
+        saveHistory();
+        break;
+      } catch (err) {
+        if (err && err.isServer) {
+          showFailure(bubble, "خطأ: " + err.message);
+          break;
         }
-‏        if (attempt < MAX_AUTO_RETRIES) {
-‏          attempt++;
-‏          bubble.textContent = "انقطع الاتصال (غالباً لأنك غادرت التطبيق). سأعيد المحاولة عند رجوعك...";
-‏          await waitUntilVisible();
-‏          await sleep(1000);
-‏          continue;
+        if (attempt < MAX_AUTO_RETRIES) {
+          attempt++;
+          bubble.textContent = "انقطع الاتصال (غالباً لأنك غادرت التطبيق). سأعيد المحاولة عند رجوعك...";
+          await waitUntilVisible();
+          await sleep(1000);
+          continue;
         }
-‏        showFailure(bubble, "خطأ في الاتصال، ولم تنجح الإعادة التلقائية.");
-‏        break;
+        showFailure(bubble, "خطأ في الاتصال، ولم تنجح الإعادة التلقائية.");
+        break;
       }
     }
 
-‏    busy = false;
-‏    sendBtn.disabled = false;
-‏    chatBox.scrollTop = chatBox.scrollHeight;
+    busy = false;
+    sendBtn.disabled = false;
+    chatBox.scrollTop = chatBox.scrollHeight;
   }
 
-‏  document.addEventListener("visibilitychange", function () {
-‏    if (document.visibilityState === "hidden") {
-‏      hiddenAt = Date.now();
-‏      return;
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") {
+      hiddenAt = Date.now();
+      return;
     }
-‏    var away = hiddenAt ? Date.now() - hiddenAt : 0;
-‏    hiddenAt = 0;
-‏    if (busy && currentController && away > HIDDEN_ABORT_MS) {
-‏      currentController.abort();
+    var away = hiddenAt ? Date.now() - hiddenAt : 0;
+    hiddenAt = 0;
+    if (busy && currentController && away > HIDDEN_ABORT_MS) {
+      currentController.abort();
     }
   });
 
-‏  function renderAll() {
-‏    chatBox.innerHTML = "";
-‏    addMessage(WELCOME, "bot");
-‏    for (var i = 0; i < chatHistory.length; i++) {
-‏      var m = chatHistory[i];
-‏      addMessage(m.content, m.role === "user" ? "user" : "bot");
+  function renderAll() {
+    chatBox.innerHTML = "";
+    addMessage(WELCOME, "bot");
+    for (var i = 0; i < chatHistory.length; i++) {
+      var m = chatHistory[i];
+      addMessage(m.content, m.role === "user" ? "user" : "bot");
     }
-‏    if (chatHistory.length > 0 && chatHistory[chatHistory.length - 1].role === "user") {
-‏      var pending = addMessage("", "bot");
-‏      showFailure(pending, "لم يصل رد على آخر رسالة.");
+    if (chatHistory.length > 0 && chatHistory[chatHistory.length - 1].role === "user") {
+      var pending = addMessage("", "bot");
+      showFailure(pending, "لم يصل رد على آخر رسالة.");
     }
   }
 
-‏  chatForm.addEventListener("submit", function (e) {
-‏    e.preventDefault();
-‏    if (busy) return;
-‏    var text = userInput.value.trim();
-‏    if (!text) return;
+  chatForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (busy) return;
+    var text = userInput.value.trim();
+    if (!text) return;
 
-‏    addMessage(text, "user");
-‏    chatHistory.push({ role: "user", content: text });
-‏    saveHistory();
-‏    userInput.value = "";
+    addMessage(text, "user");
+    chatHistory.push({ role: "user", content: text });
+    saveHistory();
+    userInput.value = "";
 
-‏    var loading = addMessage("جاري التفكير...", "bot");
-‏    requestReply(loading);
+    var loading = addMessage("جاري التفكير...", "bot");
+    requestReply(loading);
   });
 
-‏  clearBtn.addEventListener("click", function () {
-‏    if (currentController) currentController.abort();
-‏    chatHistory = [];
-‏    clearSaved();
-‏    busy = false;
-‏    sendBtn.disabled = false;
-‏    renderAll();
+  clearBtn.addEventListener("click", function () {
+    if (currentController) currentController.abort();
+    chatHistory = [];
+    clearSaved();
+    busy = false;
+    sendBtn.disabled = false;
+    renderAll();
   });
 
-‏  renderAll();
-‏</script>
+  renderAll();
+</script>
 
-‏</body>
-‏</html>
+</body>
+</html>
