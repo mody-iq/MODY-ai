@@ -84,16 +84,18 @@
 
       try {
         const response = await fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            model: MODEL_NAME,
-            messages: [{ role: 'user', content: text }]
-          })
-        });
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${apiKey}`,
+    'HTTP-Referer': window.location.origin, // لتحديد مصدر الموقع
+    'X-Title': 'Mody AI Assistant',         // اسم التطبيق
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    model: MODEL_NAME,
+    messages: [{ role: 'user', content: text }]
+  })
+});
 
         const data = await response.json();
         const botReply = data.choices?.[0]?.message?.content || 'حدث خطأ أثناء المعالجة.';
